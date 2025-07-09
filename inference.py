@@ -3,7 +3,7 @@ import torch
 
 # 모델 경로
 MODEL_PATH = './model'
-device = torch.device('cuda' if torch.cuda_is_avaliable() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
 model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)

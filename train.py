@@ -8,11 +8,11 @@ import torch
 dataset = load_dataset('e9t/nsmc', trust_remote_code=True)
 
 # 토크나이저
-pretrained_model = 'klue/bert-base'
+pretrained_model = 'klue/roberta-small'
 tokenizer = AutoTokenizer.from_pretrained(pretrained_model)
 
 def tokenize_function(example) : # 데이터셋의 내용에 해당하는 'document'에 대해서 토큰화하도록 함수 설정
-    return tokenizer(example['document'], truncation  = True, padding = True) # padding : 길이에 맞게 패딩
+    return tokenizer(example['document'], truncation  = True, padding = True) # padding : 최대길이에 맞게 패딩
 
 tokenized_dataset = dataset.map(tokenize_function, batched = True)
 
@@ -38,7 +38,7 @@ args = TrainingArguments(
     num_train_epochs=3,
     fp16=True, # gpu 반정밀도 훈련 : 모델 일부 연산을 fp16(표현력 낮음, 연산빠름, 메모리 적게)으로 수행하고, 일부는 fp32(표현력 높음, 연산 느림, 메모리 많이)로 유지해서 속도와 메모리 효율을 동시에 얻는 방식
     logging_strategy="steps", # 'epoch', 'no' / HuggingFace Traniner 훈련 중 로그를 언제 출력할지 제어하는 설정
-    logging_steps=100,
+    logging_steps=500,
     per_device_train_batch_size=32,
     weight_decay=0.01
 )
@@ -68,3 +68,14 @@ trainer.train()
 # 모델 저장(inference.py에서 추론함수가 호출한 모델을 사용할 수 있도록)
 trainer.save_model('./model')
 tokenizer.save_pretrained('./model')
+
+# ========================================
+# 📌 테스트셋 예측 및 정확도 평가
+# ========================================
+print("\n✅ 테스트셋 평가 중...")
+
+test_result = trainer.predict(tokenized_dataset['test'])
+
+# 출력: 정확도 등 주요 지표
+print("📊 테스트셋 평가 결과:")
+print(test_result.metrics)
