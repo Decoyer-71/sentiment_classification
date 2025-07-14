@@ -11,3 +11,12 @@
 - Evaluate
 
 # 3. 프로젝트 구조
+  - app.py : Streamlit 웹앱 실행 파일
+  - train.py : 모델학습 및 저장
+  - inference.py : 감전분류 예측 함수 정의
+  - model/ : 학습된 모델 저장 폴더
+  - requirement.txt : 필요한 라이브러리 목록
+
+# 4. 설치 및 실행방법
+## 1) 저장소 클론
+  git clone 
