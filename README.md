@@ -3,4 +3,11 @@
 - 'Huggig Face Transsformer, 'datasets', 'TrainerAPI'. 'Streamlit'을 사용한 간단한 웹 인터페이스 제공
 
 # 2. 기술 스택
-- Python 
+- Python 3.10+
+- Hugging Face Transformers
+- Datasets(NSMC - 네이버 영화리뷰 데이터셋)
+- Pytorch
+- Streamlit(웹 UI)
+- Evaluate
+
+# 3. 프로젝트 구조
